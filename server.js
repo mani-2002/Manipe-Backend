@@ -8,14 +8,13 @@ const PORT = 3001;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(
-//   cors({
-//     origin: ["http://localhost:3000"],
-//     methods: ["POST", "PUT", "GET", "DELETE"],
-//     credentials: true,
-//   })
-// );
-app.use(corsAnywhere());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["POST", "PUT", "GET", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use("/", userRoutes);
 
