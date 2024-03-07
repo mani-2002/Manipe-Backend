@@ -1,13 +1,8 @@
 const jwt = require("jsonwebtoken");
 const db = require("../models/db");
 const { generateUniqueTransactionId } = require("../auth");
-const twilio = require("twilio");
-require("dotenv").config();
-const secretKey = "yourSecretKey";
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
+const secretKey = "yourSecretKey";
 
 exports.registerUser = async (req, res) => {
   const { fullname, mobile_number, email, password } = req.body;
@@ -38,22 +33,7 @@ exports.registerUser = async (req, res) => {
         console.error("Error inserting user:", err);
         res.status(500).json({ error: "Internal Server Error" });
       } else {
-        // User registered successfully
         res.status(200).json({ success: "User registered successfully" });
-
-        // Send SMS notification
-        client.messages
-          .create({
-            from: process.env.TWILIO_PHONE_NUMBER,
-            to: process.env.CELL_PHONE_NUMBER,
-            body: "Someone has signed up to Manipe",
-          })
-          .then((message) => {
-            console.log("OTP sent successfully:", message.sid);
-          })
-          .catch((error) => {
-            console.error("Error sending OTP:", error);
-          });
       }
     }
   );
