@@ -10,7 +10,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://manipe.vercel.app/"],
+    origin: [
+      "http://localhost:3000",
+      "https://manipe.vercel.app/",
+      "https://manipe-backend-production.up.railway.app/",
+    ],
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })
