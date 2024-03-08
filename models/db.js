@@ -1,11 +1,5 @@
 const mysql = require("mysql2");
-const twilio = require("twilio");
 require("dotenv").config();
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const from = process.env.TWILIO_PHONE_NUMBER;
-const to = process.env.CELL_PHONE_NUMBER;
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -21,10 +15,4 @@ db.connect((err) => {
   console.log("Connected to the database");
 });
 
-module.exports = {
-  db,
-  accountSid,
-  authToken,
-  from,
-  to,
-};
+module.exports = db;
