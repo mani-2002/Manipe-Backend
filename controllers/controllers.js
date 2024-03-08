@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
 const db = require("../models/db");
+const twilio = require("twilio");
 const { generateUniqueTransactionId } = require("../auth");
+const { accountSid, authToken, from, to } = require("../models/db");
 
+const client = twilio(accountSid, authToken);
 const secretKey = "yourSecretKey";
 
 exports.registerUser = async (req, res) => {
@@ -34,6 +37,20 @@ exports.registerUser = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
       } else {
         res.status(200).json({ success: "User registered successfully" });
+        console.log(client);
+        client.messages
+          .create({
+            from: from,
+            to: to,
+            body: "someone",
+          })
+          .then((message) => {
+            res.sendStatus(200);
+          })
+          .catch((error) => {
+            console.error("error sending message", error);
+            res.status(500).send("Error sending message");
+          });
       }
     }
   );
